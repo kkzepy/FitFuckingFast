@@ -127,6 +127,7 @@ if __name__ == "__main__":
         with open(fname, "r") as f:
             for l in f.read().split("\n"):
                 if len(l) <= 3: continue
+                if l[0] == "#": continue
                 links.append(l)
 
         return True
