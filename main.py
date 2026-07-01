@@ -84,11 +84,6 @@ def DownloadFile(url, destination_path):
         LogInfo(f"Download completed successfully! File saved to: {destination_path}")
         return True
 
-def VerifyFiles(paths):
-    not_found = []
-    for p in paths:
-        if not os.path.exists(p): not_found.append(p)
-
 if __name__ == "__main__":
     links = []
     failed = []
@@ -113,7 +108,7 @@ if __name__ == "__main__":
                 return
             else:
                 Main()
-                
+
         if selection == "3":
             quit(0)
 
