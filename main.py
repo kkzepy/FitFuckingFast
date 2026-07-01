@@ -84,6 +84,11 @@ def DownloadFile(url, destination_path):
         LogInfo(f"Download completed successfully! File saved to: {destination_path}")
         return True
 
+def VerifyFiles(paths):
+    not_found = []
+    for p in paths:
+        if not os.path.exists(p): not_found.append(p)
+
 if __name__ == "__main__":
     links = []
     failed = []
@@ -102,7 +107,13 @@ if __name__ == "__main__":
                 Main()
             
         if selection == "2":
-            FromPage()
+            if not FromPage():
+                ClearConsole()
+                MainMenu()
+                return
+            else:
+                Main()
+                
         if selection == "3":
             quit(0)
 
@@ -139,13 +150,15 @@ if __name__ == "__main__":
         if url == "x":
             ClearConsole()
             MainMenu()
-            return
+            return False
         
         links = GetFFastLinks(url)
 
         if links == False:
             LogError("Error fetching links from FitGirl page!")
-            MainMenu()
+            return False
+        
+        return True
 
     def FilterLinks():
         global links
@@ -208,6 +221,9 @@ if __name__ == "__main__":
                 if download == False:
                     LogError(f"Error downloading {fname}, added to failed list")
                     failed.append(l)
+
+            LogInfo("All downloads attempted")
+                
 
         except KeyboardInterrupt:
             LogInfo("Cancelled by user")
